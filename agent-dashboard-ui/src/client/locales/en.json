@@ -1,0 +1,11 @@
+{
+  "callSummary": "Call Summary",
+  "clickToComplete": "Click the action to complete",
+  "entityName": "Entity Name",
+  "entityValues": "Entity Values",
+  "extractedEntities": "Extracted Entities",
+  "loadingAction": "Loading next best action",
+  "loadingSummary": "Loading summary",
+  "nextBestAction": "Next Best Action",
+  "otherPotentialValues": "Other potential values: "
+}

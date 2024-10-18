@@ -1,0 +1,27 @@
+
+
+$prefix: 'cds';
+
+@use '@carbon/react/index' with (
+  $css--default-type: true,
+  $css--reset: true,
+  $font-path: '@ibm/plex'
+);
+
+@use '@carbon/themes/scss/themes';
+@use '@carbon/themes/scss/theme' as *;
+
+
+:root {
+  color-scheme: light;
+  @include theme(themes.$g10);
+}
+
+/*
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    @include theme(themes.$g100);
+  }
+}
+*/

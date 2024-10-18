@@ -1,0 +1,16 @@
+{
+  "name": "mono-to-stereo-wav-converter",
+  "version": "1.0.0",
+  "description": "Converts a mono wav file of a conversation between 2 people into a stero wav file with a channel for each person.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brian Pulito",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "fs": "^0.0.1-security",
+    "ibm-watson": "^8.0.0"
+  }
+}

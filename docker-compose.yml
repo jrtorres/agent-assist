@@ -1,0 +1,131 @@
+
+# docker-compose.yml
+
+## TODO: substitute localhost references in env with correct service names
+
+version: '3.7'
+services:
+  rabbitmq:
+    image: rabbitmq:3.12.12-management
+    container_name: testflight-rabbitmq
+    ports:
+      - '5671:5671'
+      - '5672:5672'
+      - '15672:15672'
+    #volumes:
+    #  - ./.rabbitmq:/etc/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER-admin}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS-adminpass}
+    restart: 'unless-stopped'
+
+  redis:
+    image: redis:7.2.4-alpine
+    container_name: testflight-redis
+    ports:
+      - '6379:6379'
+    restart: 'unless-stopped'
+
+  stream-connector:
+    build: ./watson-stt-stream-connector
+    container_name: stream-connector
+    ports:
+      - "8080:8080"
+    environment:
+    - STREAM_ADAPTER_TYPE=${STREAM_ADAPTER_TYPE-GenesysAudioHookAdapter}
+    - WATSON_STT_USERNAME=${WATSON_STT_USERNAME}
+    - WATSON_STT_PASSWORD=${WATSON_STT_PASSWORD}
+    - WATSON_STT_URL=${WATSON_STT_URL}
+    - WATSON_STT_MODEL=${WATSON_STT_MODEL}
+    - WATSON_STT_END_OF_PHRASE_SILENCE_TIME=${WATSON_STT_END_OF_PHRASE_SILENCE_TIME-1.3}
+    - STREAM_CONNECTOR_API_KEY=${STREAM_CONNECTOR_API_KEY}
+    - DEFAULT_SERVER_LISTEN_PORT=${DEFAULT_SERVER_LISTEN_PORT-8080}
+    - LOG_LEVEL=trace
+    - NODE_ENV=dev
+    - DEBUG=*
+    - AAN_AMQP_URI=${AAN_AMQP_URI-amqp://admin:adminpass@rabbitmq:5672}
+    - AAN_REDIS_URI=${AAN_REDIS_URI-redis://redis:6379/1}
+    - OTEL_TRACES_EXPORTER=${OTEL_TRACES_EXPORTER-otlp}
+    - OTEL_SERVICE_NAME="${OTEL_SERVICE_NAME-stream-connector}"
+    - OTEL_EXPORTER_OTLP_ENDPOINT=${OTEL_EXPORTER_OTLP_ENDPOINT-http://jaeger:4317}
+    - OTEL_NODE_RESOURCE_DETECTORS=env,host
+    - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+
+  celery-workers:
+    build: ./celery
+    #container_name: aan-celery-workers
+    tty: true
+    deploy:
+      mode: replicated
+      replicas: 4
+    command: sh -c 'celery -A celery_worker worker -l INFO'
+    depends_on:
+      - rabbitmq
+      - redis
+    environment:
+    - AAN_CELERY_BROKER_URI=${AAN_CELERY_BROKER_URI-amqp://admin:adminpass@rabbitmq:5672}
+    - ANN_SOCKETIO_SERVER=${ANN_SOCKETIO_SERVER-http://api-server:8000}
+    - AAN_REDIS_HOST=${AAN_REDIS_HOST-redis}
+    - AAN_REDIS_PORT=${AAN_REDIS_PORT-6379}
+    - AAN_REDIS_DB_INDEX=${AAN_REDIS_DB_INDEX-2}
+    - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME-celery-workers}
+    - AAN_WML_APIKEY=${AAN_WML_APIKEY}
+    - AAN_WML_URL=${AAN_WML_URL}
+    - AAN_WML_PROJECT_ID=${AAN_WML_PROJECT_ID}
+    - AAN_ENTITY_EXTRACTION_LLM_MODEL_NAME=${AAN_ENTITY_EXTRACTION_LLM_MODEL_NAME}
+    - AAN_ENTITY_EXTRACTION_ENTITIES=${AAN_ENTITY_EXTRACTION_ENTITIES}
+    - AAN_SUMMARIZATION_LLM_MODEL_NAME=${AAN_SUMMARIZATION_LLM_MODEL_NAME}
+    - AAN_ASSISTANT_APIKEY=${AAN_ASSISTANT_APIKEY}
+    - AAN_ASSISTANT_URL=${AAN_ASSISTANT_URL}
+    - AAN_ASSISTANT_ID=${AAN_ASSISTANT_ID}
+    - AAN_NLU_URL=${AAN_NLU_URL}
+    - AAN_NLU_API_KEY=${AAN_NLU_API_KEY}
+    - LOG_LEVEL=trace
+    - NODE_ENV=dev
+    - DEBUG=*
+
+  celery-flower:
+    build: ./celery
+    container_name: aan-celery-flower
+    tty: true
+    command: sh -c 'celery -A celery_worker flower'
+    depends_on:
+      - rabbitmq
+      - redis
+    ports:
+      - '5555:5555'
+    environment:
+    - AAN_CELERY_BROKER_URI=${AAN_CELERY_BROKER_URI-amqp://admin:adminpass@rabbitmq:5672}
+    - ANN_SOCKETIO_SERVER=${ANN_SOCKETIO_SERVER-http://api-server:8000}
+    - AAN_REDIS_HOST=${AAN_REDIS_HOST-redis}
+    - AAN_REDIS_PORT=${AAN_REDIS_PORT-6379}
+    - AAN_REDIS_DB_INDEX=${AAN_REDIS_DB_INDEX-2}
+    - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME-celery-flower}
+    - AAN_WML_APIKEY=${AAN_WML_APIKEY}
+    - AAN_WML_URL=${AAN_WML_URL}
+    - AAN_WML_PROJECT_ID=${AAN_WML_PROJECT_ID}
+    - AAN_ENTITY_EXTRACTION_LLM_MODEL_NAME=${AAN_ENTITY_EXTRACTION_LLM_MODEL_NAME}
+    - AAN_ENTITY_EXTRACTION_ENTITIES=${AAN_ENTITY_EXTRACTION_ENTITIES}
+    - AAN_SUMMARIZATION_LLM_MODEL_NAME=${AAN_SUMMARIZATION_LLM_MODEL_NAME}
+    - AAN_ASSISTANT_APIKEY=${AAN_ASSISTANT_APIKEY}
+    - AAN_ASSISTANT_URL=${AAN_ASSISTANT_URL}
+    - AAN_ASSISTANT_ID=${AAN_ASSISTANT_ID}
+    - AAN_NLU_URL=${AAN_NLU_URL}
+    - AAN_NLU_API_KEY=${AAN_NLU_API_KEY}
+    - LOG_LEVEL=trace
+    - NODE_ENV=dev
+    - DEBUG=*
+
+  api-server:
+    build: ./api-server
+    container_name: aan-api-server
+    ports:
+      - '8000:8000'
+    restart: 'unless-stopped'
+    environment:
+    - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME-api-server}
+    - DEBUG=configureSocketIo
+    - AAN_REDIS_URI=${AAN_REDIS_URI}
+    - AAN_AMQP_URI=${AAN_AMQP_URI}
+
+    #API-Server uses watson base images, so it'll be hard to build from dockerfile for most people

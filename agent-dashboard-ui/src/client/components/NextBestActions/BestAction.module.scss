@@ -1,0 +1,49 @@
+
+
+@use '@carbon/themes';
+
+.actionTile {
+  border-width: 1px;
+  border-style: solid;
+  margin-bottom: 8px;
+
+  a {
+    background-color: themes.$layer-02;
+  }
+}
+
+.tooltip {
+  width: 100%;
+}
+
+.active {
+  border-color: themes.$support-success;
+
+  * {
+    fill: themes.$support-success;;
+  }
+}
+
+.stale {
+  border-color: themes.$support-warning;
+
+  * {
+    fill: themes.$support-warning;;
+  }
+}
+
+.expired {
+  border-color: themes.$support-error;
+
+  * {
+    fill: themes.$support-error;;
+  }
+}
+
+.complete {
+  border-color: themes.$support-info;
+
+  * {
+    fill: themes.$support-info;;
+  }
+}

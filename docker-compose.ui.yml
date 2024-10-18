@@ -1,0 +1,34 @@
+
+# docker-compose.yml
+
+## TODO: substitute localhost references in env with correct service names
+
+version: '3.7'
+services:
+  # this is the component that is embedded by an iframe in CCAS
+  agent-dashboard:
+    build: ./agent-dashboard-ui
+    container_name: aan-agent-dashboard
+    ports:
+      - '3000:3000'
+    restart: 'unless-stopped'
+    environment:
+    - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME-agent-dashboard-ui}
+    - PORT=3000
+    - ANN_SOCKETIO_SERVER=${ANN_SOCKETIO_SERVER-http://api-server:8000}
+    - ANN_WRAPPER_DASHBOARD=${ANN_WRAPPER_DASHBOARD-http://localhost:3003}
+    - WA_INTEGRATION_ID=${WA_INTEGRATION_ID}
+    - WA_REGION=${WA_REGION}
+    - WA_SERVICE_INSTANCE_ID=${WA_SERVICE_INSTANCE_ID}
+
+  wrapper-ui:
+    build: ./wrapper-ui
+    container_name: aan-wrapper-ui
+    ports:
+      - '3003:3003'
+    restart: 'unless-stopped'
+    environment:
+    - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME-agent-wrapper-ui}
+    - PORT=3003
+    - ANN_AGENT_DASHBOARD=${ANN_AGENT_DASHBOARD-http://localhost:3000}
+    - ANN_SOCKETIO_SERVER=${ANN_SOCKETIO_SERVER-http://api-server:8000}

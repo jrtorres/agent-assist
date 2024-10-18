@@ -1,0 +1,19 @@
+
+
+@use '@carbon/type';
+@use '@carbon/themes';
+
+
+.dashboardWidget {
+  background-color: themes.$layer-01;
+  height: 480px;
+  padding: 16px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+
+  .widgetTitle {
+    @include type.type-style('productive-heading-01');
+    margin-bottom: 16px;
+  }
+}
