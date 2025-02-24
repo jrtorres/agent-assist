@@ -18,7 +18,7 @@ load_dotenv()
 # Watson Assistant credentials
 assistant_apikey = os.getenv('AAN_ASSISTANT_APIKEY')
 assistant_url = os.getenv('AAN_ASSISTANT_URL')
-assistant_id = os.getenv('AAN_ASSISTANT_ID')
+assistant_id = os.getenv('AAN_ASSISTANT_ID') or os.getenv('AAN_ASSISTANT_ENVIRONMENT_ID')
 
 # Initialize Watson Assistant
 authenticator = IAMAuthenticator(assistant_apikey)
