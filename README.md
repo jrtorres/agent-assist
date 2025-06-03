@@ -64,7 +64,7 @@ For bi-directional communication between
 ## Contributors
 
 - [Brian Pulito](https://github.com/bpulito)
-- Kyle Sava
+- [Kyle Sava](https://github.com/kylesava)
 - [Bob Fang](https://github.com/bobfang)
 - Keith Frost
 
