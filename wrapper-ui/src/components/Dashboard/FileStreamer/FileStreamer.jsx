@@ -16,12 +16,19 @@ const FileStreamer = () => {
       return;
     }
 
+    //JRT
+    const url = 'ws://52.118.188.248:8080'
+    if (window.__APP_CONFIG__) {
+      //url = `${window.__APP_CONFIG__.wsPath}`
+    } 
+
     const fileReader = new FileReader();
 
     // Set up event handlers for the FileReader
     fileReader.onload = function(event) {
       const fileData = event.target.result;
-      send(fileData, agentId);
+      //send(fileData, agentId);
+      send(fileData,agentId,url); //JRT
       setIsPlaying(!isPlaying);
       setAudioStarted(true);
     }
