@@ -16,7 +16,7 @@ services:
     - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME-agent-dashboard-ui}
     - PORT=3000
     - ANN_SOCKETIO_SERVER=${ANN_SOCKETIO_SERVER-http://api-server:8000}
-    - ANN_WRAPPER_DASHBOARD=${ANN_WRAPPER_DASHBOARD-http://localhost:3003}
+    - ANN_WRAPPER_DASHBOARD=${ANN_WRAPPER_DASHBOARD-http://wrapper-ui:3003}
     - WA_INTEGRATION_ID=${WA_INTEGRATION_ID}
     - WA_REGION=${WA_REGION}
     - WA_SERVICE_INSTANCE_ID=${WA_SERVICE_INSTANCE_ID}
@@ -30,5 +30,5 @@ services:
     environment:
     - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME-agent-wrapper-ui}
     - PORT=3003
-    - ANN_AGENT_DASHBOARD=${ANN_AGENT_DASHBOARD-http://localhost:3000}
+    - ANN_AGENT_DASHBOARD=${ANN_AGENT_DASHBOARD-http://agent-dashboard:3000}
     - ANN_SOCKETIO_SERVER=${ANN_SOCKETIO_SERVER-http://api-server:8000}
