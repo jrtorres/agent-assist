@@ -35,7 +35,7 @@ def extract_entities(agent_text, user_text):
 
     try:
         entities_to_extract = str(os.environ.get('AAN_ENTITY_EXTRACTION_ENTITIES'))
-        if model_name == 'meta-llama/llama-3-70b-instruct' or model_name == 'meta-llama/llama-3-1-70b-instruct':
+        if model_name == 'meta-llama/llama-3-70b-instruct' or model_name == 'meta-llama/llama-3-1-70b-instruct' or model_name == 'meta-llama/llama-3-3-70b-instruct':
             
             entity_extraction_prompt = """ 
                 <|begin_of_text|><|start_header_id|>system<|end_header_id|>
