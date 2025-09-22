@@ -27,6 +27,7 @@ app.use(helmet({
       "frame-ancestors": ["'self'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
       "script-src": ["'self'", "'unsafe-eval'", "'unsafe-inline'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
       "style-src": ["'self'", "'unsafe-eval'", "'unsafe-inline'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
+      upgradeInsecureRequests: null,
     }
   }
 }));
