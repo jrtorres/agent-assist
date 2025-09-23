@@ -13,8 +13,12 @@ let sendChunkFunc;
 // Frame duration if measured in milli-seconds
 const frameDuration = 100;
 
+const uuid41 = () => ('xxxxxxxx-xxxx-4xxx-Nxxx-xxxxxxxxxxxx'
+  .replace(/x/g, () =>  ((Math.random()*16)|0).toString(16))
+  .replace(/N/g, () => ((Math.random()*4)|0 + 8).toString(16)));
+
 // Function to handle file input change.
-export function send(arrayBuffer, agent_id=crypto.randomUUID(), url = 'ws://localhost:8080') {
+export function send(arrayBuffer, agent_id=uuid41(), url = 'ws://localhost:8080') {
 
     //  First we cleanup in currently running sessions
     cleanupSession();
@@ -169,14 +173,14 @@ function sendSessionOpen(agent_id){
                             "type": "open",
                             "seq": 1,
                             "serverseq": 0,
-                            "id": "asdf123456",//crypto.randomUUID(),
+                            "id": uuid41(),//crypto.randomUUID(),
                             "position": "PT0S",
                             "agent_id": agent_id, // this is a placeholder for agent_id, for backends to route communications
                             "parameters": {
-                                "organizationId": "asdf123456", //crypto.randomUUID(),
-                                "conversationId": "asdf123456", //crypto.randomUUID(),
+                                "organizationId": uuid41(), //crypto.randomUUID(),
+                                "conversationId": uuid41(), //crypto.randomUUID(),
                                 "participant": {
-                                    "id": "asdf123456", //crypto.randomUUID(),
+                                    "id": uuid41(), //crypto.randomUUID(),
                                     "ani": "+1" + Math.floor(1000000000 + Math.random() *8999999999),
                                     "aniName": "WAV File",
                                     "dnis": "+18006558977"
@@ -237,6 +241,7 @@ function sendFileData(arrayBuffer) {
 
    return sendChunk;
 }
+
 
 //  audioFormat – Indicates how the sample data for the wave file is stored. 
 //  The most common format tag is 1, for integer PCM. Other formats include 
