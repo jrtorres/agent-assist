@@ -169,14 +169,14 @@ function sendSessionOpen(agent_id){
                             "type": "open",
                             "seq": 1,
                             "serverseq": 0,
-                            "id": crypto.randomUUID(),
+                            "id": "asdf123456",//crypto.randomUUID(),
                             "position": "PT0S",
                             "agent_id": agent_id, // this is a placeholder for agent_id, for backends to route communications
                             "parameters": {
-                                "organizationId": crypto.randomUUID(),
-                                "conversationId": crypto.randomUUID(),
+                                "organizationId": "asdf123456", //crypto.randomUUID(),
+                                "conversationId": "asdf123456", //crypto.randomUUID(),
                                 "participant": {
-                                    "id": crypto.randomUUID(),
+                                    "id": "asdf123456", //crypto.randomUUID(),
                                     "ani": "+1" + Math.floor(1000000000 + Math.random() *8999999999),
                                     "aniName": "WAV File",
                                     "dnis": "+18006558977"
