@@ -17,10 +17,13 @@ const FileStreamer = () => {
     }
 
     //JRT
-    const url = 'ws://52.118.188.248:8080'
+    let url;
     if (window.__APP_CONFIG__) {
-      //url = `${window.__APP_CONFIG__.wsPath}`
-    } 
+      url = `${window.__APP_CONFIG__?.streamConnectorPath}`;
+    } else
+    {
+      url = 'ws://localhost:8080';
+    }
 
     const fileReader = new FileReader();
 

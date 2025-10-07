@@ -44,7 +44,7 @@ app.get('/', (req, res, next) => {
     // Inject the proxy path into the HTML (via a global JS variable)
     const modifiedHtml = html.replace(
       '</head>',
-      `<script>window.__APP_CONFIG__ = { proxyPath: '${process.env.ANN_AGENT_DASHBOARD}' };</script></head>`
+      `<script>window.__APP_CONFIG__ = { proxyPath: '${process.env.ANN_AGENT_DASHBOARD}', streamConnectorPath: '${process.env.STREAM_CONNECTOR_SERVER}' };</script></head>`
     );
 
     res.send(modifiedHtml);

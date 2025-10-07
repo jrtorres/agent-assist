@@ -14,7 +14,7 @@ services:
     restart: 'unless-stopped'
     environment:
     - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME-agent-dashboard-ui}
-    - PORT=3000
+    - AD_PORT=3000
     - ANN_SOCKETIO_SERVER=${ANN_SOCKETIO_SERVER-http://api-server:8000}
     - ANN_WRAPPER_DASHBOARD=${ANN_WRAPPER_DASHBOARD-http://wrapper-ui:3003}
     - WA_INTEGRATION_ID=${WA_INTEGRATION_ID}
@@ -29,6 +29,7 @@ services:
     restart: 'unless-stopped'
     environment:
     - OTEL_SERVICE_NAME=${OTEL_SERVICE_NAME-agent-wrapper-ui}
-    - PORT=3003
+    - WU_PORT=3003
     - ANN_AGENT_DASHBOARD=${ANN_AGENT_DASHBOARD-http://agent-dashboard:3000}
     - ANN_SOCKETIO_SERVER=${ANN_SOCKETIO_SERVER-http://api-server:8000}
+    - STREAM_CONNECTOR_SERVER=${STREAM_CONNECTOR_SERVER-ws://stream-connector:8080}
