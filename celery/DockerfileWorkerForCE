@@ -1,0 +1,25 @@
+FROM python:3.10-slim
+
+ENV NLTK_DATA=/usr/share/nltk_data
+
+# Install NLTK and other dependencies
+RUN pip install nltk
+
+# Create a directory for NLTK data and download the 'punkt' resource
+RUN mkdir -p $NLTK_DATA \
+    && python -m nltk.downloader punkt -d $NLTK_DATA
+
+
+WORKDIR /usr/src/app
+COPY . .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the startup script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Expose Flask port
+EXPOSE 5000
+
+# Run the shell script
+CMD ["/start.sh"]
