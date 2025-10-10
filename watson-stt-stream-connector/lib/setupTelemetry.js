@@ -7,6 +7,7 @@ const { credentials } = require('@grpc/grpc-js');
 
 
 const LOG_LEVEL = process.env.LOG_LEVEL;
+const OTEL_EXPORTER_OTLP_ENDPOINT = process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://jaeger:4317';
 const logger = require('pino')({ level: LOG_LEVEL, name: 'setupTelemetry' });
 
 let providerInstance; // Store the provider instance to be re-used
@@ -20,7 +21,7 @@ function setupTelemetry() {
     if (process.env.TELEMETRY === 'true') {
       const exporter = new CollectorTraceExporter({
         credentials: credentials.createInsecure(),
-        url: 'jaeger:4317',
+        url: OTEL_EXPORTER_OTLP_ENDPOINT,//'jaeger:4317',
       });
 
       spanProcessor = new BatchSpanProcessor(exporter);

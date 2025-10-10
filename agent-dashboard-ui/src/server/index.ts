@@ -24,10 +24,10 @@ app.use(helmet({
     directives: {
       "img-src": ["'self'", "https: data:"],
       "default-src": ["'self'"],
-      "connect-src": ["'self'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", "https://*.codeengine.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
-      "frame-ancestors": ["'self'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", "https://*.codeengine.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
-      "script-src": ["'self'", "'unsafe-eval'", "'unsafe-inline'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", "https://*.codeengine.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
-      "style-src": ["'self'", "'unsafe-eval'", "'unsafe-inline'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", "https://*.codeengine.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
+      "connect-src": ["'self'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", "https://*.codeengine.appdomain.cloud", "https://*.containers.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
+      "frame-ancestors": ["'self'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", "https://*.codeengine.appdomain.cloud", "https://*.containers.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
+      "script-src": ["'self'", "'unsafe-eval'", "'unsafe-inline'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", "https://*.codeengine.appdomain.cloud", "https://*.containers.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
+      "style-src": ["'self'", "'unsafe-eval'", "'unsafe-inline'", "http://localhost:5173", "http://localhost", "https://*.watson.appdomain.cloud", "https://*.codeengine.appdomain.cloud", "https://*.containers.appdomain.cloud", `${ANN_WRAPPER_DASHBOARD}`],
       "upgrade-insecure-requests": null,
     }
   }
