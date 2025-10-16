@@ -31,7 +31,7 @@ def process_transcript(self, topic, message):
             f"SummaryAgent {colors.OKGREEN}{topic}{colors.ENDC} + {colors.OKBLUE}{message}{colors.ENDC}"
         )
         # emit(event, data=None, room=None, skip_sid=None, namespace=None)
-        print(self.sio)
+        #print(self.sio)
         try:
             # self.sio.emit('celeryMessage', {'payloadString': message, 'destinationName': topic}, namespace='/celery') #
             client_id = self.extract_client_id(topic)

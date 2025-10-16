@@ -1,4 +1,3 @@
-# Import necessary libraries
 from ibm_watson_machine_learning.foundation_models import Model
 from ibm_watson_machine_learning.metanames import GenTextParamsMetaNames as GenParams
 from ibm_watson_machine_learning.foundation_models.utils.enums import ModelTypes, DecodingMethods
@@ -79,8 +78,6 @@ def summarize_text(segment):
     except Exception as e:
         logging.error(f"Error during summarization: {e}")
         return ""
-
-
 
 def summarize(transcript):
     """

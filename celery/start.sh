@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Start up a dummy flask server for deployment of celery worker to code engine
+
 # Trap to clean up both processes
 trap "kill 0" EXIT
 
