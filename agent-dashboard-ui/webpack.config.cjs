@@ -4,6 +4,7 @@ var WebpackShellPluginNext = require('webpack-shell-plugin-next');
 var webpack = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const path = require('path');
 var _ = require('lodash');
@@ -15,6 +16,7 @@ module.exports = function (env) {
 
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.json'],
+      plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
       alias: {
         "@client": path.join(__dirname, 'src', 'client'),
         "@server": path.join(__dirname, 'src', 'server')
@@ -65,8 +67,9 @@ module.exports = function (env) {
   ];
 
   const client = {
-    entry: path.resolve(__dirname, 'src', 'client', 'index.tsx'),
-
+    // entry: path.resolve(__dirname, 'src', 'client', 'index.tsx'),
+    context: path.resolve(__dirname),  // important
+    entry: './src/client/index.tsx',    // TSX entry
     output: {
       path: path.join(__dirname, 'dist', 'client'),
       filename: 'bundle.[chunkhash].js',
@@ -110,6 +113,10 @@ module.exports = function (env) {
               }
             }
           ]
+        },
+        {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"]
         }
       ])
     },

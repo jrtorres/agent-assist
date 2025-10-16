@@ -12,12 +12,12 @@ const Dashboard = () => {
           <TopBar />
         </div>
         <div className="flex h-full overflow-hidden">
-          <div className="w-2/3 mb-2">
+          <div className="flex-1 mb-2 w-full">
             <MiddleBox />
           </div>
-          <div className="w-1/3">
+          {/* <div className="w-1/3">
             <RightBar />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

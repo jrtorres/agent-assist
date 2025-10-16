@@ -2,8 +2,18 @@ FROM node:20 AS build
 
 WORKDIR /agent-dashboard
 
-COPY src/ src/
-COPY *.json *.js ./
+# copy package files first
+COPY package*.json ./ 
+COPY webpack.config.cjs ./
+COPY tsconfig.json ./
+
+
+# copy src folder only
+COPY src/ ./src
+
+
+# COPY src/ src/
+# COPY *.json *.js ./
 
 RUN npm install --force
 RUN npm run build

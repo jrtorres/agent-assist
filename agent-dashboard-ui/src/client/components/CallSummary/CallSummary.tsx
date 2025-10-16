@@ -23,7 +23,7 @@ const CallSummary = () => {
   }, [lastMessage])
 
   return (
-    <div className={widgetStyles.dashboardWidget}>
+    <div className={widgetStyles.dashboardWidget} style={{"overflow": "auto"}}>
       <div className={widgetStyles.widgetTitle}>
         {t("callSummary")}
       </div>
