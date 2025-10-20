@@ -10,6 +10,8 @@ let eventPublisher = null;
 
 //  CCaaS specific adapters currently supported
 const GenesysAudioHookAdapter = require('./GenesysAudioHookAdapter');
+
+const GenesysAudioHookAdapterV2 = require('./GenesysAudioHookAdapterV2');
 const MonoChannelStreamingAdapter = require('./MonoChannelStreamingAdapter');
 const SiprecStreamingAdapter = require('./SiprecStreamingAdapter');
 
@@ -45,6 +47,10 @@ function startServer() {
     if (process.env.STREAM_ADAPTER_TYPE == 'GenesysAudioHookAdapter'){
         GenesysAudioHookAdapter.setEventPublisher(eventPublisher);
         wsServer.on('connection', GenesysAudioHookAdapter.handleAudioHookConnection);
+    }
+    else if (process.env.STREAM_ADAPTER_TYPE == 'GenesysAudioHookAdapterV2'){
+        GenesysAudioHookAdapterV2.setEventPublisher(eventPublisher);
+        wsServer.on('connection', GenesysAudioHookAdapterV2.handleAudioHookConnection);    
     }
     else if (process.env.STREAM_ADAPTER_TYPE == 'MonoChannelStreamingAdapter'){
       MonoChannelStreamingAdapter.setEventPublisher(eventPublisher);
